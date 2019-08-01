@@ -12,13 +12,13 @@ class ErShou(object):
         self.price = price
         self.name = name
         self.xiaoqu = xiaoqu
-        self.danjia = danjia
+        self.danjia = str(danjia)
         self.floor = floor
-        self.years = years
+        self.years = str(years)
         self.pattern = pattern
-        self.size = size
-        self.direction = direction
-        self.tag = tag
+        self.size = str(size)
+        self.direction = str(direction)
+        self.tag = str(tag)
 
     def text(self):
         return self.district + "," + \

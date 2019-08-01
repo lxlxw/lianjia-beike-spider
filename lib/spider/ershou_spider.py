@@ -95,17 +95,18 @@ class ErShouSpider(BaseSpider):
                 desc = house_elem.find('div', class_="houseInfo")
                 #pic = house_elem.find('a', class_="img").find('img', class_="lj-lazy")
                 xiaoqu = house_elem.find('div', class_="positionInfo")
-                danjia = house_elem.find('div', class_="unitPrice")('data-price')
+                danjia = house_elem.find('div', class_="unitPrice")
                 tag = house_elem.find('div', class_="tag")
 
                 # 继续清理数据
-                price = price.text.strip()
+                price = price.text.replace(r'万', '').strip()
                 name = name.text.replace("\n", "")
                 desc = desc.text.replace("\n", "").strip()
                 #pic = pic.get('data-original').strip()
                 xiaoqu = xiaoqu.text.strip()
-                danjia = danjia.strip()
-                tag = name.text.replace("\n", " ")
+                danjia = danjia.text.replace(r'单价', '').strip()
+                danjia = danjia.replace(r'元/平米', '')
+                tag = tag.text.replace("\n", " ").strip()
 
                 # 解析desc
                 descarr = desc.split('|')
