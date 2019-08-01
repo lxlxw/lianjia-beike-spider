@@ -40,7 +40,9 @@ class ErShouSpider(BaseSpider):
             if fmt == "csv":
                 for ershou in ershous:
                     # print(date_string + "," + xiaoqu.text())
-                    f.write(self.date_string + "," + ershou.text() + "\n")
+                    # 转换时间
+
+                    f.write(self.date_ymdhms + "," + ershou.text() + "\n")
         print("Finish crawl area: " + area_name + ", save data to : " + csv_file)
 
     @staticmethod
@@ -91,18 +93,38 @@ class ErShouSpider(BaseSpider):
                 price = house_elem.find('div', class_="totalPrice")
                 name = house_elem.find('div', class_='title')
                 desc = house_elem.find('div', class_="houseInfo")
-                pic = house_elem.find('a', class_="img").find('img', class_="lj-lazy")
+                #pic = house_elem.find('a', class_="img").find('img', class_="lj-lazy")
+                xiaoqu = house_elem.find('div', class_="positionInfo")
+                danjia = house_elem.find('div', class_="unitPrice")('data-price')
 
                 # 继续清理数据
                 price = price.text.strip()
                 name = name.text.replace("\n", "")
                 desc = desc.text.replace("\n", "").strip()
-                pic = pic.get('data-original').strip()
-                # print(pic)
+                #pic = pic.get('data-original').strip()
+                xiaoqu = xiaoqu.text.strip()
+                danjia = danjia.text.strip()
+
+                # 解析desc
+                descarr = desc.split('|')
+                if len(descarr) == 5:
+                    floor = descarr[0].text.strip()
+                    years = descarr[1].text.replace(r'年建', '').strip()
+                    pattern = descarr[2].text.strip()
+                    size = descarr[3].text.replace(r'平米', '').strip()
+                    direction = descarr[4].text.strip()
+                elif len(descarr) == 3:
+                    f_desc = descarr[0].text.strip()
+                    f_descarr = f_desc.text.split(' ')
+                    years = 0
+                    floor = f_descarr[0].text.strip()
+                    pattern = f_descarr[1].text.strip()
+                    size = descarr[1].text.replace(r'平米', '').strip()
+                    direction = descarr[2].text.strip()
 
 
                 # 作为对象保存
-                ershou = ErShou(chinese_district, chinese_area, name, price, desc, pic)
+                ershou = ErShou(chinese_district, chinese_area, name, price, xiaoqu, danjia, floor, years, pattern, size, direction)
                 ershou_list.append(ershou)
         return ershou_list
 

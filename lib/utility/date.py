@@ -24,6 +24,14 @@ def get_date_string():
     current = time.localtime()
     return time.strftime("%Y%m%d", current)
 
+def get_date_ymdhms():
+    """
+    获得形如2016-10-10 00:00:00这样的年月日字符串
+    :return:
+    """
+    current = time.localtime()
+    return time.strftime("%Y-%m-%d %H:%M:%S", current) 
+
 
 def get_year_month_string():
     """
