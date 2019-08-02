@@ -74,7 +74,7 @@ if __name__ == '__main__':
     # date = "20180331"   # 指定采集数据的日期
     # city = "sh"         # 指定采集数据的城市
     city_ch = get_chinese_city(city)
-    csv_dir = "{0}/{1}/xiaoqu/{2}/{3}".format(DATA_PATH, SPIDER_NAME, city, date)
+    csv_dir = "{0}/{1}/ershou/{2}/{3}".format(DATA_PATH, SPIDER_NAME, city, date)
 
     files = list()
     if not os.path.exists(csv_dir):
@@ -120,11 +120,11 @@ if __name__ == '__main__':
                 # sale = sale.replace(r'套在售二手房', '')
                 # price = price.replace(r'暂无', '0')
                 # price = price.replace(r'元/m2', '')
-                price = int(price)
-                danjia = int(danjia)
+                price = float(price)
+                danjia = float(danjia)
                 years = int(years)
                 size = float(size)
-                date = datetime.datetime.strptime(date, "%Y/%m/%d %H:%M:%S")
+                date = datetime.datetime.strptime(str(date), "%Y-%m-%d %H:%M:%S")
                 print("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}".format(date, district, area, name, price, xiaoqu, danjia, floor, years, pattern, size, direction, tag, link, houseid))
                 # 写入mysql数据库
                 if database == "mysql":

@@ -7,6 +7,7 @@
 
 import os
 import pymysql
+import time,datetime
 from lib.utility.path import DATA_PATH
 from lib.zone.city import *
 from lib.utility.date import *
@@ -36,10 +37,10 @@ if __name__ == '__main__':
     ##################################
     # mysql/mongodb/excel/json/csv
     # database = "mysql"
-    # database = "mongodb"
+    database = "mongodb"
     # database = "excel"
     # database = "json"
-    database = "csv"
+    # database = "csv"
     ##################################
     db = None
     collection = None
@@ -120,6 +121,7 @@ if __name__ == '__main__':
                 price = price.replace(r'元/m2', '')
                 price = int(price)
                 sale = int(sale)
+                date = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
                 print("{0} {1} {2} {3} {4} {5}".format(date, district, area, xiaoqu, price, sale))
                 # 写入mysql数据库
                 if database == "mysql":
