@@ -101,9 +101,9 @@ if __name__ == '__main__':
                 try:
                     # 如果小区名里面没有逗号，那么总共是6项
                     # district, area, name, price, xiaoqu, danjia, floor, years, pattern, size, direction, tag
-                    if text.count(',') == 12:
-                        date, district, area, name, price, xiaoqu, danjia, floor, years, pattern, size, direction, tag = text.split(',')
-                    elif text.count(',') < 12:
+                    if text.count(',') == 14:
+                        date, district, area, name, price, xiaoqu, danjia, floor, years, pattern, size, direction, tag, link, houseid = text.split(',')
+                    elif text.count(',') < 14:
                         continue
                     # else:
                     #     fields = text.split(',')
@@ -125,7 +125,7 @@ if __name__ == '__main__':
                 years = int(years)
                 size = float(size)
                 date = datetime.datetime.strptime(date, "%Y/%m/%d %H:%M:%S")
-                print("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}".format(date, district, area, name, price, xiaoqu, danjia, floor, years, pattern, size, direction, tag))
+                print("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}".format(date, district, area, name, price, xiaoqu, danjia, floor, years, pattern, size, direction, tag, link, houseid))
                 # 写入mysql数据库
                 if database == "mysql":
                     # db.query('INSERT INTO xiaoqu (city, date, district, area, xiaoqu, price, sale) '
@@ -135,8 +135,8 @@ if __name__ == '__main__':
                 # 写入mongodb数据库
                     pass
                 elif database == "mongodb":
-                    data = dict(city=city_ch, date=date, district=district, area=area, name=name, price=price,
-                                xiaoqu=xiaoqu, danjia=danjia, floor=floor, years=years, pattern=pattern, size=size, direction=direction, tag=tag)
+                    data = dict(city=city_ch, date=date, houseid=houseid, district=district, area=area, name=name, price=price,
+                                xiaoqu=xiaoqu, danjia=danjia, floor=floor, years=years, pattern=pattern, size=size, direction=direction, tag=tag, link=link)
                     collection.insert(data)
                 elif database == "excel":
                     # if not PYTHON_3:

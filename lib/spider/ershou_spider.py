@@ -98,6 +98,9 @@ class ErShouSpider(BaseSpider):
                 danjia = house_elem.find('div', class_="unitPrice")
                 tag = house_elem.find('div', class_="tag")
 
+                link = name.a.get('href')
+                houseid = danjia.get('data-hid')
+
                 # 继续清理数据
                 price = price.text.replace(r'万', '').strip()
                 name = name.text.replace("\n", "")
@@ -125,9 +128,8 @@ class ErShouSpider(BaseSpider):
                     size = descarr[1].replace(r'平米', '').strip()
                     direction = descarr[2].strip()
 
-
                 # 作为对象保存
-                ershou = ErShou(chinese_district, chinese_area, name, price, xiaoqu, danjia, floor, years, pattern, size, direction, tag)
+                ershou = ErShou(chinese_district, chinese_area, name, price, xiaoqu, danjia, floor, years, pattern, size, direction, tag, link, houseid)
                 ershou_list.append(ershou)
         return ershou_list
 

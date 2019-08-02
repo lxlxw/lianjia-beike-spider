@@ -39,7 +39,7 @@ class XiaoQuBaseSpider(BaseSpider):
                 self.mutex.release()
             if fmt == "csv":
                 for xiaoqu in xqs:
-                    f.write(self.date_string + "," + xiaoqu.text() + "\n")
+                    f.write(self.date_ymdhms + "," + xiaoqu.text() + "\n")
         print("Finish crawl area: " + area_name + ", save data to : " + csv_file)
         logger.info("Finish crawl area: " + area_name + ", save data to : " + csv_file)
 
